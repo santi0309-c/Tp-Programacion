@@ -1,21 +1,12 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
+#include "dlist.h"
+#include "generador_primos.h"
+#include "heap.h"
 
-typedef struct Nodo {
-    int id; 
-    char *mensaje;
-    Nodo *anterior;
-    Nodo *siguiente;
-} Nodo;
-
-
-typedef struct Blockchain {
-    Nodo *primero; 
-    Nodo *ultimo; 
-    int longitud;
-} Blockchain;
-
+typedef *dlist Blockchain;
 
 typedef struct Federada {
     Blockchain **BlockchainsArray;

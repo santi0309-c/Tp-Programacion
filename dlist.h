@@ -6,18 +6,22 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 typedef void (*FuncionVisitante) (int dato);
 
-typedef struct _DNodo {
-  int dato;
-  struct _DNodo *sig;
-  struct _DNodo *ant;
-} DNodo;
+typedef struct Nodo {
+    int id; 
+    char *mensaje;
+    Nodo *anterior;
+    Nodo *siguiente;
+} Nodo;
+
 
 typedef struct {
-  DNodo *primero;
-  DNodo *ultimo;
+  Nodo *primero;
+  Nodo *ultimo;
+  int cant;
 } DList;
 
 /**
@@ -28,7 +32,7 @@ DList* dlist_crear();
 /**
  * Destruccion de la lista.
  */
-void dlist_destruir_dnodo(DNodo *lista);
+void dlist_destruir_Nodo(Nodo *lista);
 
 /**
  * Destruccion de la lista.

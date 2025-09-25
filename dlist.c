@@ -1,15 +1,24 @@
 #include "dlist.h"
 
+Nodo* crear_nodo(unsigned long long id, const char *mensaje) {
+    Nodo *node = malloc(sizeof(Nodo));
+    node->id = id;
+    node->msj = strdup(mensaje ? mensaje : "");
+    node->anterior = NULL;
+    node->siguiente = NULL;
+    return node;
+}
+
 DList* dlist_crear() {
   DList *dlist = malloc(sizeof(DList));
   dlist->primero = NULL;
   dlist->ultimo = NULL;
-
+  dList->cant = 0;
   return dlist;
 }
 
-void dlist_destruir_dnodo(DNodo *lista) {
-  DNodo *nodo_a_eliminar;
+void dlist_destruir_Nodo(Nodo *lista) {
+  Nodo *nodo_a_eliminar;
   while (lista != NULL) {
     nodo_a_eliminar = lista;
     lista = lista->sig;
@@ -18,7 +27,7 @@ void dlist_destruir_dnodo(DNodo *lista) {
 }
 
 void dlist_destruir(DList *lista) {
-  dlist_destruir_dnodo(lista->primero);
+  dlist_destruir_Nodo(lista->primero);
   free(lista);
 }
 
@@ -27,7 +36,7 @@ int dlist_vacia(DList *lista) {
 }
 
 DList* dlist_agregar_final(DList* lista, int dato) {
-  DNodo *nuevo_nodo = malloc(sizeof(DNodo));
+  Nodo *nuevo_nodo = malloc(sizeof(Nodo));
   nuevo_nodo->dato = dato;
   nuevo_nodo->sig = NULL;
   nuevo_nodo->ant = lista->ultimo;
@@ -43,7 +52,7 @@ DList* dlist_agregar_final(DList* lista, int dato) {
 }
 
 DList* dlist_agregar_inicio(DList *lista, int dato) {
-  DNodo *nuevo_nodo = malloc(sizeof(DNodo));
+  Nodo *nuevo_nodo = malloc(sizeof(Nodo));
   nuevo_nodo->dato = dato;
   nuevo_nodo->sig = lista->primero;
   nuevo_nodo->ant = NULL;
@@ -59,12 +68,12 @@ DList* dlist_agregar_inicio(DList *lista, int dato) {
 }
 
 void dlist_recorrer_hacia_adelante(DList *lista, FuncionVisitante visit) {
-  for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig)
+  for (Nodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig)
     visit(nodo->dato);
 }
 
 void dlist_recorrer_hacia_atras(DList *lista, FuncionVisitante visit) {
-  for (DNodo *nodo = lista->ultimo; nodo != NULL; nodo = nodo->ant)
+  for (Nodo *nodo = lista->ultimo; nodo != NULL; nodo = nodo->ant)
     visit(nodo->dato);
 }
 
