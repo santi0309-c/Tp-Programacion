@@ -15,3 +15,7 @@ typedef struct Federada {
     int longTree; 
     int lastPrimo; 
 } Federada;
+
+void agregar(Federada*, int, Blockchain*);
+
+void actualizar(Federada*);
