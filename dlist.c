@@ -3,7 +3,7 @@
 Nodo* crear_nodo(unsigned long long id, const char *mensaje) {
     Nodo *node = malloc(sizeof(Nodo));
     node->id = id;
-    node->msj = strdup(mensaje ? mensaje : "");
+    node->mensaje = strdup(mensaje ? mensaje : "");
     node->anterior = NULL;
     node->siguiente = NULL;
     return node;
@@ -13,7 +13,7 @@ DList* dlist_crear() {
   DList *dlist = malloc(sizeof(DList));
   dlist->primero = NULL;
   dlist->ultimo = NULL;
-  dList->cant = 0;
+  dlist->cant = 0;
   return dlist;
 }
 
@@ -21,7 +21,7 @@ void dlist_destruir_Nodo(Nodo *lista) {
   Nodo *nodo_a_eliminar;
   while (lista != NULL) {
     nodo_a_eliminar = lista;
-    lista = lista->sig;
+    lista = lista->siguiente;
     free(nodo_a_eliminar);
   }
 }
@@ -37,12 +37,12 @@ int dlist_vacia(DList *lista) {
 
 DList* dlist_agregar_final(DList* lista, int dato) {
   Nodo *nuevo_nodo = malloc(sizeof(Nodo));
-  nuevo_nodo->dato = dato;
-  nuevo_nodo->sig = NULL;
-  nuevo_nodo->ant = lista->ultimo;
+  nuevo_nodo->mensaje = dato;
+  nuevo_nodo->siguiente = NULL;
+  nuevo_nodo->anterior = lista->ultimo;
 
   if (lista->ultimo != NULL)
-    lista->ultimo->sig = nuevo_nodo;
+    lista->ultimo->siguiente = nuevo_nodo;
 
   if (lista->primero == NULL)
     lista->primero = nuevo_nodo;
@@ -53,12 +53,22 @@ DList* dlist_agregar_final(DList* lista, int dato) {
 
 DList* dlist_agregar_inicio(DList *lista, int dato) {
   Nodo *nuevo_nodo = malloc(sizeof(Nodo));
-  nuevo_nodo->dato = dato;
-  nuevo_nodo->sig = lista->primero;
-  nuevo_nodo->ant = NULL;
+  nuevo_nodo->mensaje = dato;
+  nuevo_nodo->siguiente = lista->primero;
+  nuevo_nodo->anterior = NULL;
+  nuevo_nodo->id = 0;
+  lista->cant++;
+
+  Nodo *aux = malloc(sizeof(Nodo));
+  aux = nuevo_nodo;
+
+  for (int i = 0; i < lista->cant; i++){
+    aux->siguiente->id++;
+    aux = aux->siguiente;
+  }
   
   if (lista->primero != NULL)
-    lista->primero->ant = nuevo_nodo;
+    lista->primero->anterior = nuevo_nodo;
 
   if (lista->ultimo == NULL)
     lista->ultimo = nuevo_nodo;
@@ -69,11 +79,11 @@ DList* dlist_agregar_inicio(DList *lista, int dato) {
 
 void dlist_recorrer_hacia_adelante(DList *lista, FuncionVisitante visit) {
   for (Nodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig)
-    visit(nodo->dato);
+    visit(nodo->mensaje);
 }
 
 void dlist_recorrer_hacia_atras(DList *lista, FuncionVisitante visit) {
   for (Nodo *nodo = lista->ultimo; nodo != NULL; nodo = nodo->ant)
-    visit(nodo->dato);
+    visit(nodo->mensaje);
 }
 

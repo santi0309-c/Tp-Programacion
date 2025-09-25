@@ -9,10 +9,10 @@
 typedef *dlist Blockchain;
 
 typedef struct Federada {
-    Blockchain **BlockchainsArray;
-    int cantBlock; 
-    int largoBlock; 
+    Blockchain *BlockchainsArray;
+    int cantBlock;  
     int *treeValidation; // arreglo que representa el arbol de validacion 
     int longTree; 
     int lastPrimo; 
 } Federada;
+
