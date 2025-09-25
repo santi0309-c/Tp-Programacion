@@ -51,39 +51,14 @@ DList* dlist_agregar_final(DList* lista, int dato) {
   return lista;
 }
 
-DList* dlist_agregar_inicio(DList *lista, int dato) {
-  Nodo *nuevo_nodo = malloc(sizeof(Nodo));
-  nuevo_nodo->mensaje = dato;
-  nuevo_nodo->siguiente = lista->primero;
-  nuevo_nodo->anterior = NULL;
-  nuevo_nodo->id = 0;
-  lista->cant++;
-
-  Nodo *aux = malloc(sizeof(Nodo));
-  aux = nuevo_nodo;
-
-  for (int i = 0; i < lista->cant; i++){
-    aux->siguiente->id++;
-    aux = aux->siguiente;
-  }
-  
-  if (lista->primero != NULL)
-    lista->primero->anterior = nuevo_nodo;
-
-  if (lista->ultimo == NULL)
-    lista->ultimo = nuevo_nodo;
-
-  lista->primero = nuevo_nodo;
-  return lista;
-}
 
 void dlist_recorrer_hacia_adelante(DList *lista, FuncionVisitante visit) {
-  for (Nodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig)
+  for (Nodo *nodo = lista->primero; nodo != NULL; nodo = nodo->siguiente)
     visit(nodo->mensaje);
 }
 
 void dlist_recorrer_hacia_atras(DList *lista, FuncionVisitante visit) {
-  for (Nodo *nodo = lista->ultimo; nodo != NULL; nodo = nodo->ant)
+  for (Nodo *nodo = lista->ultimo; nodo != NULL; nodo = nodo->anterior)
     visit(nodo->mensaje);
 }
 

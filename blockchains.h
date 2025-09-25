@@ -15,4 +15,3 @@ typedef struct Federada {
     int longTree; 
     int lastPrimo; 
 } Federada;
-
