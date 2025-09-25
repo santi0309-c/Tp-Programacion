@@ -11,7 +11,7 @@
 typedef void (*FuncionVisitante) (int dato);
 
 typedef struct Nodo {
-    int id; 
+    long long id; 
     char *mensaje;
     Nodo *anterior;
     Nodo *siguiente;
@@ -24,44 +24,38 @@ typedef struct {
   int cant;
 } DList;
 
-/**
- * Devuelve una lista vacía.
- */
-DList* dlist_crear();
+Nodo* crear_nodo(long long id, const char *mensaje);
 
-/**
- * Destruccion de la lista.
- */
 void dlist_destruir_Nodo(Nodo *lista);
 
-/**
- * Destruccion de la lista.
- */
+// Devuelve una lista vacía.
+ 
+DList* dlist_crear();
+
+// Destruccion de la lista.
+ 
+void dlist_destruir_Nodo(Nodo *lista);
+
+// Destruccion de la lista.
+
 void dlist_destruir(DList *lista);
 
-/**
- * Determina si la lista es vacía.
- */
+// Determina si la lista es vacía.
+
 int dlist_vacia(DList *lista);
 
-/**
- * Agrega un elemento al final de la lista.
- */
+// Agrega un elemento al final de la lista.
+
 DList* dlist_agregar_final(DList* lista, int dato);
 
-/**
- * Agrega un elemento al inicio de la lista.
- */
-DList* dlist_agregar_inicio(DList *lista, int dato);
 
-/**
- * Recorrido de la lista, utilizando la funcion pasada.
- */
+// Recorrido de la lista, utilizando la funcion pasada.
+
 void dlist_recorrer_hacia_adelante(DList *lista, FuncionVisitante visit);
 
-/**
- * Recorrido de la lista en orden inverso, utilizando la funcion pasada.
- */
+
+// Recorrido de la lista en orden inverso, utilizando la funcion pasada.
+
 void dlist_recorrer_hacia_atras(DList *lista, FuncionVisitante visit);
 
 #endif /* __SLIST_H__ */

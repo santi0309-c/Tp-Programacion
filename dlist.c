@@ -1,6 +1,6 @@
 #include "dlist.h"
 
-Nodo* crear_nodo(unsigned long long id, const char *mensaje) {
+Nodo* crear_nodo(long long id, const char *mensaje) {
     Nodo *node = malloc(sizeof(Nodo));
     node->id = id;
     node->mensaje = strdup(mensaje ? mensaje : "");
@@ -35,7 +35,7 @@ int dlist_vacia(DList *lista) {
   return lista->primero == NULL;
 }
 
-DList* dlist_agregar_final(DList* lista, int dato) {
+DList* dlist_agregar_final(DList* lista, long long dato) {
   Nodo *nuevo_nodo = malloc(sizeof(Nodo));
   nuevo_nodo->mensaje = dato;
   nuevo_nodo->siguiente = NULL;
