@@ -8,3 +8,5 @@ void modificar_dato(long long arr[], long long nro_agregar, int posc_agregar);
 int followPotenciaDos(int pDos);
 
 void construirTree(Federada *F);
+
+oid actualizarHoja(Federada *FedBlock, int indexHoja, long long id);

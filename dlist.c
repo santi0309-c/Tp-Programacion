@@ -1,22 +1,5 @@
 #include "dlist.h"
 
-Nodo* crear_nodo(long long id, const char *mensaje) {
-    Nodo *node = malloc(sizeof(Nodo));
-    node->id = id;
-    node->mensaje = strdup(mensaje ? mensaje : "");
-    node->anterior = NULL;
-    node->siguiente = NULL;
-    return node;
-}
-
-void dlist_destruir_Nodo(Nodo *lista) {
-  Nodo *nodo_a_eliminar;
-  while (lista != NULL) {
-    nodo_a_eliminar = lista;
-    lista = lista->siguiente;
-    free(nodo_a_eliminar);
-  }
-}
 
 DList* dlist_crear() {
   DList *dlist = malloc(sizeof(DList));

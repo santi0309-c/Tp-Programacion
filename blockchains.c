@@ -1,5 +1,41 @@
 #include "blockchains.h"
 
+Nodo* crear_nodo(long long id, const char *mensaje) {
+    Nodo *node = malloc(sizeof(Nodo));
+    node->id = id;
+    node->mensaje = strdup(mensaje ? mensaje : "");
+    node->anterior = NULL;
+    node->siguiente = NULL;
+    return node;
+}
+
+void destruir_Nodo(Nodo *lista) {
+  Nodo *nodo_a_eliminar;
+  while (lista != NULL) {
+    nodo_a_eliminar = lista;
+    lista = lista->siguiente;
+    free(nodo_a_eliminar);
+  }
+}
+
+Blockchain* crearBlockchain() {
+    Blockchain *Block = malloc(sizeof(Blockchain));
+    Block->primero = Block->ultimo = NULL;
+    Block->longitud = 0;
+    return Block;
+}
+
+void liberaBlockchain(Blockchain *Block) {
+    if (!Block) return;
+    Nodo *actual = Block->primero;
+    while (actual) {
+        Nodo *sig = actual->siguiente;
+        liberar_nodo(actual);
+        actual = sig;
+    }
+    free(b);
+}
+
 void blockchain_agregar_con_id(Blockchain *block, long long id, char *mensaje) {
     Nodo *node = crear_nodo(id, mensaje);
     if (!block->primero) {
@@ -12,15 +48,15 @@ void blockchain_agregar_con_id(Blockchain *block, long long id, char *mensaje) {
     block->cant++;
 }
 
-
 Nodo* blockchain_buscar_por_id(Blockchain *block, long long id) {
     Nodo *actual = block->primero;
     while (actual) {
-        if (actual->id == id) return actual;
-        actual = actual->siguiente;
-        int izq = Federada->treeValidation[i*2];
-        int der = Federada->treeValidation[i*2 + 1];
-        Federada->treeValidation[i] = izq * der;
+        if (actual->id == id) 
+            return actual;
     }
     return NULL;
 }
+
+
+
+

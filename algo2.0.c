@@ -113,16 +113,7 @@ void federada_actualizar_hoja(Federada *F, int indice_hoja, unsigned long long v
 
 /* ------------------ Federada: crear, redimensionar, alta, modificar, validar ------------------ */
 
-Federada* crear_federada(int capacidad_inicial) {
-    Federada *F = malloc(sizeof(Federada));
-    F->cantidad = 0;
-    F->capacidad = capacidad_inicial > 0 ? capacidad_inicial : 1;
-    F->cadenas = calloc(F->capacidad, sizeof(Blockchain*));
-    F->heap = NULL;
-    F->tamanio_heap = 0;
-    F->ultimo_primo = 2;
-    return F;
-}
+
 
 void federada_redimensionar(Federada *F, int nueva_capacidad) {
     if (nueva_capacidad <= F->capacidad) return;
