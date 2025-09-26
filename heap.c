@@ -42,7 +42,7 @@ void construirTree(Federada *FedBlock) {
     FedBlock->longTree = longTree;
     int firstHoja = pot2;
     for (int i = 0; i < firstHoja; ++i) {
-        int indexH = longTree + i;
+        int indexH = firstHoja + i;
         if (i < hojas) {
             Blockchain *blockC = FedBlock->BlockchainsArray[i];
             if (blockC && blockC->ultimo) 
@@ -56,7 +56,5 @@ void construirTree(Federada *FedBlock) {
         long long izq = FedBlock->treeValidation[2*i];
         long long der = FedBlock->treeValidation[2*i + 1];
         FedBlock->treeValidation[i] = izq * der;
-        if (i == 1) 
-            break;
     }
 }
