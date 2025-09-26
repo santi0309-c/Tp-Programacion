@@ -60,12 +60,12 @@ void construirTree(Federada *FedBlock) {
 }
 
 void actualizarHoja(Federada *FedBlock, int indexHoja, long long id) {
-    if (!FedBlock->heap) return;
+    if (!FedBlock->treeValidation) return;
     int hojas = FedBlock->cantHojas;
     int potDos = followPotenciaDos(hojas);
-    int indexCambiar = potDos + indice_hoja;
+    int indexCambiar = potDos + indexHoja;
     FedBlock->treeValidation[indexCambiar] = id;
-    while (indexCambiar > 1) {
+    while (indexCambiar > 0) {
         if(indexCambiar % 2 == 1){
             indexCambiar = (indexCambiar - 1) / 2;
         } else{

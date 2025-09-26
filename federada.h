@@ -4,7 +4,7 @@
 #include <math.h>
 #include "blockchains.h"
 #include "generador_primos.h"
-#include "heap.h"
+#include "tree.h"
 
 typedef struct Federada {
     Blockchain *BlockchainsArray;

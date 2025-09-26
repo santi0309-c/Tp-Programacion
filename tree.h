@@ -9,4 +9,4 @@ int followPotenciaDos(int pDos);
 
 void construirTree(Federada *F);
 
-oid actualizarHoja(Federada *FedBlock, int indexHoja, long long id);
+void actualizarHoja(Federada *FedBlock, int indexHoja, long long id);
