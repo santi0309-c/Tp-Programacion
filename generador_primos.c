@@ -4,7 +4,7 @@
 #include "generador_primos.h"
 
 // Programa que utiliza el algoritmo 'Criba de Eratóstenes' para generar los primeros n números primos
-int* primos(int n) {
+long long* primos(int n) {
     if (n <= 0) return NULL;
 
     // Cota superior para el nésimo primo según el teorema de Rosser: n*(log n + log log n)
@@ -21,7 +21,7 @@ int* primos(int n) {
         }
     }
 
-    int *primo = malloc(sizeof(int) * n);
+    long long *primo = malloc(sizeof(long long) * n);
     int cant_primos = 0;
     for (int i = 2; i <= cota_sup && cant_primos < n; i++) {
         if (es_primo[i]) {

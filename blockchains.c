@@ -21,7 +21,7 @@ void destruir_Nodo(Nodo *lista) {
 Blockchain* crearBlockchain() {
     Blockchain *Block = malloc(sizeof(Blockchain));
     Block->primero = Block->ultimo = NULL;
-    Block->longitud = 0;
+    Block->cant = 0;
     return Block;
 }
 
@@ -30,13 +30,13 @@ void liberaBlockchain(Blockchain *Block) {
     Nodo *actual = Block->primero;
     while (actual) {
         Nodo *sig = actual->siguiente;
-        liberar_nodo(actual);
+        destruir_Nodo(actual);
         actual = sig;
     }
-    free(b);
+    free(Block);
 }
 
-void blockchain_agregar_con_id(Blockchain *block, long long id, char *mensaje) {
+void blockchain_agregar_id(Blockchain *block, long long id, char *mensaje) {
     Nodo *node = crear_nodo(id, mensaje);
     if (!block->primero) {
         block->primero = block->ultimo = node;
