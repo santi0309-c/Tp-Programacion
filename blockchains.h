@@ -11,10 +11,10 @@ typedef DList Blockchain;
 
 typedef struct Federada {
     Blockchain *BlockchainsArray;
-    int cantBlock;  
+    int cantHojas;  
     int *treeValidation; // arreglo que representa el arbol de validacion 
     int longTree; 
-    int lastPrimo; 
+    long long lastPrimo; 
 } Federada;
 
 Nodo* blockchain_buscar_por_id(Blockchain *block, long long id);
@@ -22,5 +22,3 @@ Nodo* blockchain_buscar_por_id(Blockchain *block, long long id);
 void blockchain_agregar_id(Blockchain *block, long long id, char *mensaje);
 
 void agregar(Federada*, int, Blockchain*);
-
-void actualizar(Federada*);

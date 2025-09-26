@@ -26,7 +26,7 @@ int followPotenciaDos(int nro){
 
 
 void construirTree(Federada *FedBlock) {
-    int hojas = FedBlock->cantBlock;
+    int hojas = FedBlock->cantHojas;
     if (hojas == 0) {
         free(FedBlock->treeValidation);
         FedBlock->treeValidation = NULL;
@@ -47,14 +47,30 @@ void construirTree(Federada *FedBlock) {
             Blockchain *blockC = FedBlock->BlockchainsArray[i];
             if (blockC && blockC->ultimo) 
                 FedBlock->treeValidation[indexH] = blockC->ultimo->id;
-            else FedBlock->treeValidation[indexH] = NULL;
+            else FedBlock->treeValidation[indexH] = 1;
         } else {
-            FedBlock->treeValidation[indexH] = NULL;
+            FedBlock->treeValidation[indexH] = 1;
         }
     }
     for (int i = firstHoja - 1; i >= 1; --i) {
         long long izq = FedBlock->treeValidation[2*i];
         long long der = FedBlock->treeValidation[2*i + 1];
         FedBlock->treeValidation[i] = izq * der;
+    }
+}
+
+void actualizarHoja(Federada *FedBlock, int indexHoja, long long id) {
+    if (!FedBlock->heap) return;
+    int hojas = FedBlock->cantHojas;
+    int potDos = followPotenciaDos(hojas);
+    int indexCambiar = potDos + indice_hoja;
+    FedBlock->treeValidation[indexCambiar] = id;
+    while (indexCambiar > 1) {
+        if(indexCambiar % 2 == 1){
+            indexCambiar = (indexCambiar - 1) / 2;
+        } else{
+            indexCambiar = indexCambiar / 2;
+        }
+        FedBlock->treeValidation[indexCambiar] = FedBlock->treeValidation[2*indexCambiar] * FedBlock->treeValidation[2*indexCambiar + 1];
     }
 }

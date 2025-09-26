@@ -98,10 +98,6 @@ void federada_construir_heap(Federada *F) {
 }
 */
 
-unsigned long long federada_raiz(Federada *F) {
-    if (!F->heap || F->tamanio_heap <= 1) return 1ULL;
-    return F->heap[1];
-}
 
 void federada_actualizar_hoja(Federada *F, int indice_hoja, unsigned long long valor) {
     if (!F->heap) return;
