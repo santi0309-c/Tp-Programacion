@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "heap.h": "c",
-        "tree.h": "c",
-        "generador_primos.h": "c"
-    }
-}

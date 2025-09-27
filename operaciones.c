@@ -47,6 +47,7 @@ int federada_validar(Federada *FedBlock) {
         }
         if (cont != FedBlock->treeValidation[1]) return 0;
     }
+    return 1;
 }
 
 int federada_validar_subconjunto(Federada *FedBlock, long long esperado, int minIdx, int maxIdx) {
