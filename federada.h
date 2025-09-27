@@ -24,7 +24,7 @@ void federadaAgregarBlock(Federada *FedBlock);
 
 int followPotenciaDos(int pDos);
 
-void modificar_dato(long long arr[], long long nro_agregar, int posc_agregar);
+void modificar_dato(Federada *Fedblock, int bcModificar, long long id_nodoModificar, char mensajeNuevo[]);
 
 void construirTree(Federada *F);
 

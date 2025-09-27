@@ -81,21 +81,34 @@ int followPotenciaDos(int nro){
     return pDos;
 }
 
-void modificar_dato(long long tree[], long long nro_agregar, int posc_agregar){
-    tree[posc_agregar] = nro_agregar;
-
-    if (posc_agregar <= 1)
-        return;
+void modificar_dato(Federada *Fedblock, int bcModificar, long long id_nodoModificar, char mensajeNuevo[]){
     
-    if (posc_agregar % 2 == 1){
-        posc_agregar = (posc_agregar - 1) / 2;
-    } else{
-        posc_agregar = posc_agregar / 2;
+    Blockchain *cambio = Fedblock->BlockchainsArray[bcModificar]; 
+
+
+
+    Nodo *nodoCambiar = cambio->ultimo;
+    while (nodoCambiar != NULL && nodoCambiar->id != id_nodoModificar){
+        nodoCambiar = nodoCambiar->anterior;
+    }
+    if (nodoCambiar == NULL){
+        fprintf(stderr, "No se encontro el nodo a modificar\n");
+        return;
     }
     
-    tree[posc_agregar] = tree[posc_agregar * 2] * tree[posc_agregar * 2 + 1];
+    free(nodoCambiar->mensaje);
+    nodoCambiar->mensaje = strdup(mensajeNuevo ? mensajeNuevo : "");
+
+    unsigned long long ultimo = Fedblock->lastPrimo;
+    while (nodoCambiar != NULL){
+        unsigned long long *p = primos(ultimo);
+        nodoCambiar->id = *p;
+        ultimo = *p;
+        nodoCambiar = nodoCambiar->siguiente;
+    }
+
+    free(cambio);
     
-    modificar_dato(tree, tree[posc_agregar], posc_agregar);
     return; 
 }
 
