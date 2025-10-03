@@ -40,6 +40,9 @@ Federada* crearFederada(int cantBlocks) {
     int cantNodos = 2*followPotenciaDos(FedBlock->cantHojas);
     FedBlock->capacidadTree = cantNodos; 
     FedBlock->BlockchainsArray = calloc(cantNodos, sizeof(Blockchain*)); 
+    for (int i = 0; i < cantNodos; i++) {
+        FedBlock->BlockchainsArray[i] = crearBlockchain();
+    }
     FedBlock->treeValidation = NULL;
     FedBlock->longTree = 0;
     FedBlock->lastPrimo = 2;
@@ -60,9 +63,20 @@ void federadaActuCant(Federada *FedBlock, int cantNuevaBlocks) {
 
 void liberarFederada(Federada *FedBlock) {
     if (!FedBlock) return;
-    for (int i = 0; i < FedBlock->cantHojas; ++i) liberaBlockchain(FedBlock->BlockchainsArray[i]);
-    free(FedBlock->BlockchainsArray);
-    free(FedBlock->treeValidation);
+    if (FedBlock->BlockchainsArray) {
+        for (int i = 0; i < FedBlock->cantHojas; ++i) {
+            if (FedBlock->BlockchainsArray[i]) {
+                printf("Liberando blockchain %d\n", i);
+                liberaBlockchain(FedBlock->BlockchainsArray[i]);
+                printf("Blockchain %d liberada\n", i);
+            }
+        printf("Libere blockchain %d\n", i);
+        }
+        free(FedBlock->BlockchainsArray);
+    }
+    if (FedBlock->treeValidation) {
+        free(FedBlock->treeValidation);
+    }
     free(FedBlock);
 }
 
@@ -119,12 +133,8 @@ void actualizarHoja(Federada *FedBlock, int indexHoja, long long id) {
     int potDos = followPotenciaDos(hojas);
     int indexCambiar = potDos + indexHoja;
     FedBlock->treeValidation[indexCambiar] = id;
-    while (indexCambiar > 0) {
-        if(indexCambiar % 2 == 1){
-            indexCambiar = (indexCambiar - 1) / 2;
-        } else{
-            indexCambiar = indexCambiar / 2;
-        }
+    while (indexCambiar > 1) {
+        indexCambiar /= 2;
         FedBlock->treeValidation[indexCambiar] = FedBlock->treeValidation[2*indexCambiar] * FedBlock->treeValidation[2*indexCambiar + 1];
     }
 }

@@ -2,6 +2,7 @@
 
 Nodo* crear_nodo(long long id, const char *mensaje) {
     Nodo *node = malloc(sizeof(Nodo));
+    if (!node) return NULL;
     node->id = id;
     node->mensaje = strdup(mensaje ? mensaje : "");
     node->anterior = NULL;
@@ -20,27 +21,38 @@ void destruir_Nodo(Nodo *lista) {
 
 Blockchain* crearBlockchain() {
     Blockchain *Block = malloc(sizeof(Blockchain));
-    Block->primero = Block->ultimo = NULL;
+    Block->primero = NULL;
+    Block->ultimo = NULL;
     Block->cant = 0;
     return Block;
 }
 
 void liberaBlockchain(Blockchain *Block) {
-    if (!Block) return;
+    if (!Block || !Block->primero) return;
     Nodo *actual = Block->primero;
-    while (actual) {
+    printf("Liberando blockchain con %d nodos\n", Block->cant);
+    while (actual != NULL) {
+        printf("Liberando nodo con ID: %lld y mensaje: %s\n", actual->id, actual->mensaje);
         Nodo *sig = actual->siguiente;
-        destruir_Nodo(actual);
+        free(actual->mensaje);
+        free(actual);
         actual = sig;
     }
+
+    printf("Libere todos los nodos\n");
     free(Block);
 }
 
 void blockchain_agregar_id(Blockchain *block, long long id, char *mensaje) {
+    if (!block) {
+        printf("Error: Blockchain es NULL\n");
+    return;}
     Nodo *node = crear_nodo(id, mensaje);
-    if (!block->primero) {
-        block->primero = block->ultimo = node;
-    } else {
+
+    if (block->primero == NULL) {
+        block->ultimo = node;
+        block->primero = node;
+        } else {
         block->ultimo->siguiente = node;
         node->anterior = block->ultimo;
         block->ultimo = node;

@@ -1,5 +1,4 @@
 #include "operaciones.h"
-
 int main (){
     Federada *F = crearFederada(2);
     federadaAgregarBlock(F);
@@ -9,4 +8,7 @@ int main (){
     modificar_dato(F, 0, 2, "Modificado 0");
     int ok = federada_validar(F);
     printf("Validación completa: %s\n", ok ? "OK" : "FALLA");
+    liberarFederada(F);
+    printf("Fin del programa\n");
+    return 0;
 }

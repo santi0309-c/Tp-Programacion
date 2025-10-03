@@ -33,39 +33,32 @@ void federada_modificar(Federada *FedBlock, int nroBlock, long long idAntiguo, c
     actualizarHoja(FedBlock, nroBlock, id_final);
 }
 
-int federada_validar(Federada *FedBlock) {
-    for (int i = 0; i < FedBlock->cantHojas; i++) {
-        Blockchain *blockchain = FedBlock->BlockchainsArray[i];
-        Nodo *nodo = blockchain->ultimo;
-        while (nodo->anterior){
-            if (nodo->id < nodo->anterior->id) return 0;
-            nodo = nodo->anterior;
+int federada_validar(Federada *fedblock){
+    long long ids[fedblock->cantHojas];
+    for (int i = 0; i < fedblock->cantHojas; i++){
+        Blockchain *b = fedblock->BlockchainsArray[i];
+        if (!b || !b->ultimo) {  
+            ids[i] = 1; 
+            continue;
         }
-        int cont = 1;
-        for (int o = FedBlock->longTree/2; o < (FedBlock->cantHojas + FedBlock->longTree/2); o++) {
-            cont = cont * FedBlock->treeValidation[o];
-        }
-        if (cont != FedBlock->treeValidation[1]) return 0;
+        ids[i] = b->ultimo->id;
     }
-    return 1;
+    long long producto = 1;
+    for (int i = 0; i < fedblock->cantHojas; i++){
+        producto *= ids[i];
+    }
+    if (producto != fedblock->treeValidation[1]){
+        return 0;
+    }else return 1;
 }
+
+
 
 int federada_validar_subconjunto(Federada *FedBlock, long long esperado, int minIdx, int maxIdx) {
     if (minIdx > maxIdx || maxIdx >= FedBlock->cantHojas) return 0;
-    int producto = 1;
-    
-    if (minIdx%2 == 1){
-        for (int i = minIdx; i <= maxIdx; ++i){
-            producto = producto * FedBlock->treeValidation[(FedBlock->longTree/2) + i];
-        }
-    } else {
-         for (int i = minIdx; i <= maxIdx; ++i){
-            if (maxIdx >= i+2){
-                producto = producto * FedBlock->treeValidation[((FedBlock->longTree/2) + i)/2];
-            }
-            else {
-                producto = producto * FedBlock->treeValidation[(FedBlock->longTree/2) + i];
-            }
-        }
+    long long producto = 1;
+    for (int i = minIdx; i <= maxIdx; ++i) {
+        producto *= FedBlock->treeValidation[(FedBlock->longTree/2) + i];
     }
+    return producto == esperado;
 }
